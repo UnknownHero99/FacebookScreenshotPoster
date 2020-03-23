@@ -1,5 +1,6 @@
 var config = require('./config');
-var moment = require('moment');
+var messageProcessor =  require('./textProcessor.js');
+
 var FB = require('fb');
 FB.setAccessToken(config.facebook.accessToken);
 
@@ -33,6 +34,7 @@ function retrivePageID(callback){
       return;
     }
     pageID = res.id;
+    if(config.facebook.debugMode) console.log("DEBUG: " + config.facebook.pageID + " id is " + res.id );
     callback(res.id);
   });
 }
@@ -40,9 +42,11 @@ function retrivePageID(callback){
 function publishPost(message, callback){
   if(callback == undefined){
     callback = message;
-    message = processMessage(config.facebook.post.message);
+    message = config.facebook.post.message;
   }
-  FB.api(config.facebook.pageID + '/feed', { published: false, message: message }, 'post', function (res) {
+  message = messageProcessor.processText(message);
+
+  FB.api(config.facebook.pageID + '/feed', { published: !config.facebook.debugMode, message: message }, 'post', function (res) {
     if(!res || res.error) {
       console.log(!res ? 'error occurred' : res.error);
       return;
@@ -51,17 +55,5 @@ function publishPost(message, callback){
   });
 }
 
-function processMessage(message){
-  message = message.replace('{weekFromToDate}', weekFromToDate());
-  return message;
-}
-
-function weekFromToDate(){
-  const fromDate = moment().startOf('isoWeek');
-  const toDate = moment().endOf('isoWeek').subtract(2,'days');
-  return fromDate.format('DD.M') + ' - ' + toDate.format('DD.M');
-}
-
 exports.retrivePageAccessToken = retrivePageAccessToken;
 exports.publishPost = publishPost;
-exports.processMessage = processMessage;

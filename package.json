@@ -1,0 +1,25 @@
+{
+  "name": "facebookscreenshotposter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "run.js",
+  "dependencies": {
+    "fb": "^2.0.0",
+    "moment": "^2.24.0",
+    "puppeteer": "^2.1.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "run.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/UnknownHero99/FacebookScreenshotPoster.git"
+  },
+  "author": "Jakob Salmič",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/UnknownHero99/FacebookScreenshotPoster/issues"
+  },
+  "homepage": "https://github.com/UnknownHero99/FacebookScreenshotPoster#readme"
+}
