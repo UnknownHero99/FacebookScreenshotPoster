@@ -1,11 +1,10 @@
 var config = require('./config').facebook;
 var messageProcessor =  require('./textProcessor.js');
 var fs = require('fs');
-
 var FB = require('fb');
-FB.setAccessToken(config.accessToken);
 
 function retrivePageID(callback){
+  FB.setAccessToken(config.accessToken);
   FB.api(config.pageID, {fields: 'id'}, 'get', function (res) {
     if(!res || res.error) {
       console.log(!res ? 'error occurred' : res.error);
