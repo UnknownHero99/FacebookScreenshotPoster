@@ -1,10 +1,12 @@
 var config = {};
 
+config.cronJobTime = '0 0 6 * * 1'; // seconds minutes hours days months dayOfWeek
+
 config.screenshot = {
-  url: '',
-  selector: '',
+  url: 'https://example.com',
+  selector: '#elementID',
   path: './screenshots/',
-  name: 'screenshot{weekFromToDate}.png',
+  name: 'example{weekFromToDate}.png',
   viewPort: {
     width: 1920,
     height: 1080
@@ -12,14 +14,10 @@ config.screenshot = {
 }
 
 config.facebook = {
-  debugMode: true,//posts wont be published, more console logs
-  pageID: "",
-  accessToken: "",
+  pageID: "facebookPageID",
+  accessToken: "facebookAccessTOKEN",
   post: {
-    message: "",
-    attachment:{
-      description: "",
-    }
+    message: "message {weekFromToDate}"
   }
 }
 

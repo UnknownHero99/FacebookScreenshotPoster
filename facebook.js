@@ -1,8 +1,21 @@
-var config = require('./config');
+var config = require('./config').facebook;
 var messageProcessor =  require('./textProcessor.js');
+var fs = require('fs');
 
 var FB = require('fb');
-FB.setAccessToken(config.facebook.accessToken);
+FB.setAccessToken(config.accessToken);
+
+function retrivePageID(callback){
+  FB.api(config.pageID, {fields: 'id'}, 'get', function (res) {
+    if(!res || res.error) {
+      console.log(!res ? 'error occurred' : res.error);
+      return;
+    }
+    pageID = res.id;
+    if(config.debugMode) console.log("DEBUG: " + config.pageID + " id is " + res.id );
+    callback(res.id);
+  });
+}
 
 function retrivePageAccessToken(callback){
     retrivePageID((pageID) => {
@@ -27,26 +40,14 @@ function retrivePageAccessToken(callback){
   });
 }
 
-function retrivePageID(callback){
-  FB.api(config.facebook.pageID, {fields: 'id'}, 'get', function (res) {
-    if(!res || res.error) {
-      console.log(!res ? 'error occurred' : res.error);
-      return;
-    }
-    pageID = res.id;
-    if(config.facebook.debugMode) console.log("DEBUG: " + config.facebook.pageID + " id is " + res.id );
-    callback(res.id);
-  });
-}
-
-function publishPost(message, callback){
+function publishPost(path, message, callback){
   if(callback == undefined){
     callback = message;
-    message = config.facebook.post.message;
+    message = config.post.message;
   }
   message = messageProcessor.processText(message);
-
-  FB.api(config.facebook.pageID + '/feed', { published: !config.facebook.debugMode, message: message }, 'post', function (res) {
+  var fileReaderStream = fs.createReadStream(path);
+  FB.api(config.pageID + '/photos', {caption: message, filedata: fileReaderStream}, 'post', function (res) {
     if(!res || res.error) {
       console.log(!res ? 'error occurred' : res.error);
       return;
