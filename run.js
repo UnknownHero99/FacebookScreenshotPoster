@@ -5,7 +5,7 @@ var CronJob = require('cron').CronJob;
 
 var job = new CronJob(config.cronJobTime, function() {
   facebook.retrivePageAccessToken((token) => {
-    console.log('page access token: ' + token)
+    console.log('page access token: ' + token);
     screenshot.screenshotPage((path) => {
       facebook.publishPost(path, (attachementID) => {
           console.log('post id: ' + attachementID)
