@@ -34,7 +34,7 @@ to start software
 node run.js
 ```
 
-###for deployment use pm2
+### for deployment use pm2
 ```
 npm install pm2 -g
 pm2 start run.js --name FacebookScreenshotPoster
