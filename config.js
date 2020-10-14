@@ -17,7 +17,12 @@ config.facebook = {
   pageID: "facebookPageID",
   accessToken: "facebookAccessTOKEN",
   post: {
-    message: "message {weekFromToDate}"
+    randomise: true,
+    messages: [
+      "message1 {weekFromToDate}",
+      "message2 {weekFromToDate}",
+      "message3 {weekFromToDate}"
+    ]
   }
 }
 

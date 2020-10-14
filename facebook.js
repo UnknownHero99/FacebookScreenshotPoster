@@ -1,5 +1,6 @@
 var config = require('./config').facebook;
 var messageProcessor =  require('./textProcessor.js');
+var utils = require('./utils.js')
 var fs = require('fs');
 var FB = require('fb');
 
@@ -42,7 +43,13 @@ function retrivePageAccessToken(callback){
 function publishPost(path, message, callback){
   if(callback == undefined){
     callback = message;
-    message = config.post.message;
+    if(config.post.randomise){
+      var randomMessage = utils.getRandomInt(config.post.messages.length)
+      message = config.post.messages[randomMessage];
+    }
+    else{
+      message = config.post.messages[0];
+    }
   }
   message = messageProcessor.processText(message);
   var fileReaderStream = fs.createReadStream(path);
