@@ -12,6 +12,7 @@ async function screenshotPage(callback){
       width: config.viewPort.width,
       height: config.viewPort.height,
     });
+    if(config.customCSS != "") await page.addStyleTag({content: config.customCSS})
     const element = await page.$(config.selector);
     await element.screenshot({path: screenshotPath});
 

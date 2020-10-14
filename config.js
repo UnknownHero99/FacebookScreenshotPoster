@@ -7,6 +7,7 @@ config.screenshot = {
   selector: '#elementID',
   path: './screenshots/',
   name: 'example{weekFromToDate}.png',
+  customCSS: '',
   viewPort: {
     width: 1920,
     height: 1080
