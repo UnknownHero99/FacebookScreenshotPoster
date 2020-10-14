@@ -7,7 +7,7 @@ async function screenshotPage(callback){
     
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
-    await page.goto('https://radolska-ponvica.si', {waitUntil: 'load'});
+    await page.goto(config.url, {waitUntil: 'load'});
     await page.setViewport({
       width: config.viewPort.width,
       height: config.viewPort.height,
